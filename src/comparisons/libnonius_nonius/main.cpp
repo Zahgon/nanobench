@@ -12,16 +12,11 @@ NONIUS_PARAM(X, UINT64_C(1))
 template <typename Fn>
 struct volatilize_fn {
     Fn fn;
-    auto operator()() const -> decltype(fn()) {
-        volatile auto x = fn();
-        return x;
-    }
+    auto operator()() const -> decltype(fn()) { __builtin_trap() /* STUB: not implemented */; }
 };
 
 template <typename Fn>
-auto volatilize(Fn&& fn) -> volatilize_fn<typename std::decay<Fn>::type> {
-    return {std::forward<Fn>(fn)};
-}
+auto volatilize(Fn&& fn) -> volatilize_fn<typename std::decay<Fn>::type> { __builtin_trap() /* STUB: not implemented */; }
 
 NONIUS_BENCHMARK("x += x", [](nonius::chronometer meter) {
     auto x = meter.param<X>();
